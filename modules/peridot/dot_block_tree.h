@@ -5,6 +5,9 @@
 
 #include "core/object/ref_counted.h"
 #include "core/math/geometry_3d.h"
+#include "core/math/bvh.h"
+#include <vector>
+
 
 class DotBlockTree : public RefCounted
 {
@@ -19,8 +22,21 @@ private:
 
     typedef unsigned __int32 DotBlock;
 
+    //, 2, true, 128, UserPairTestFunction<GodotCollisionObject3D>, UserCullTestFunction<GodotCollisionObject3D>> bvh;
+    BVH_Manager<DotBlock, 
+
+    Vector3 m_leafDimensions
+
+    Vector3 m_dimensions;
+
     struct TreeNode
     {
+        Vector3i origin;
+
+        std::vector<TreeNode> children;
+
+
+        /// @brief C-style array in linearized XYZ order, with size leafDimensions
         DotBlock* leafBlocks; 
     };
 
