@@ -3,6 +3,8 @@
 #include "core/object/class_db.h"
 #include "dot_block_tree.h"
 
+using namespace Peridot;
+
 void initialize_peridot_module(ModuleInitializationLevel p_level )
 {
     if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE)

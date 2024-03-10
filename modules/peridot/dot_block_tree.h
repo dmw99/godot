@@ -3,66 +3,50 @@
 #ifndef DOTBLOCKTREE_H
 #define DOTBLOCKTREE_H
 
+#include <memory>
+
 #include "core/object/ref_counted.h"
 #include "core/math/geometry_3d.h"
-#include "core/math/bvh.h"
-#include <vector>
+
+#include "dot_block_tree_node.h"
 
 
-class DotBlockTree : public RefCounted
+namespace Peridot
 {
-private:
-    GDCLASS(DotBlockTree, RefCounted);
-
-    //b0-9  : material type
-    //b10-13: block_shape
-    //b14-15: Y-rotation. 
-    //b16   : is hidden (server).
-    //b17   : is_ground (above defaults to sky, below defaults to procedural ground).
-
-    typedef unsigned __int32 DotBlock;
-
-    //, 2, true, 128, UserPairTestFunction<GodotCollisionObject3D>, UserCullTestFunction<GodotCollisionObject3D>> bvh;
-    BVH_Manager<DotBlock, 
-
-    Vector3 m_leafDimensions
-
-    Vector3 m_dimensions;
-
-    struct TreeNode
+    class DotBlockTree : public RefCounted
     {
-        Vector3i origin;
+    private:
+        GDCLASS(DotBlockTree, RefCounted);
 
-        std::vector<TreeNode> children;
+        std::unique_ptr<TreeNode> m_root;
 
+    protected:
 
-        /// @brief C-style array in linearized XYZ order, with size leafDimensions
-        DotBlock* leafBlocks; 
+        static void _bind_methods();
+
+    public:
+
+        void initialize(const Vector3i& dimensionsInLeafs );
+
+        /// @brief gets the leaf enclosing this position, or null if no leaf there.
+        /// @param posInLeafs Absolute position in blocks.
+        Variant getLeaf(const Vector3i& posInBlocks);
+
+        /// @brief Gets the DotBlock at the absolute position in blocks. 
+        DotBlock get(const Vector3i& posInBlocks);
+
+        /// @brief Sets the absolute position in blocks to the passed-in value. 
+        void set(const Vector3i& posInBlocks, DotBlock value);
+
+        /// @brief Gets the number of leafs in the tree, for debugging/unit testing.
+        int getNumLeafsDebug();
+
+        /// @brief Gets an internal enum number representing the state of the top root node (0=EMPTY, 1=LEAF, 2=PARENT).
+        int getRootStateDebug();
     };
-
-    
-
+}
 
 
-
-protected:
-
-    static void _bind_methods();
-
-public:
-
-    /// @brief constructor
-    /// @param dimensions Size of the area in blocks. All dimensions should be Power-Of-Two.
-    /// @param leafDimensions size of a leaf. All dimensions should be Power-Of-Two.
-    DotBlockTree(Vector3 dimensions, Vector3 leafDimensions );
-
-
-    bool isPositive(int value);
-
-
-
-
-};
 
 
 #endif //DOTBLOCKTREE_H
