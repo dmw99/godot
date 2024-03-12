@@ -87,8 +87,8 @@ namespace Peridot
     void DotBlockTree::_bind_methods()
     {
         ClassDB::bind_method(D_METHOD("get_leaf", "posInBlocks"), &DotBlockTree::getLeaf);
-        ClassDB::bind_method(D_METHOD("get", "posInBlocks"), &DotBlockTree::get);
-        ClassDB::bind_method(D_METHOD("set", "posInBlocks", "value"), &DotBlockTree::set);
+        ClassDB::bind_method(D_METHOD("get_block", "posInBlocks"), &DotBlockTree::get);
+        ClassDB::bind_method(D_METHOD("set_block", "posInBlocks", "value"), &DotBlockTree::set);
         ClassDB::bind_method(D_METHOD("initialize", "dimensionsInLeafs"), &DotBlockTree::initialize);
 
         ClassDB::bind_method(D_METHOD("get_root_state_debug"), &DotBlockTree::getRootStateDebug);

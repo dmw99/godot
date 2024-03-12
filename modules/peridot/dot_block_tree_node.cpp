@@ -99,7 +99,8 @@ namespace Peridot
             return DOT_BLOCK_NULL;
         }
 
-        return pLeaf[coord(pos)];
+        Vector3i moduloPos(pos.x % LEAF_DIM_SIZE, pos.y % LEAF_DIM_SIZE, pos.z % LEAF_DIM_SIZE);
+        return pLeaf[coord(moduloPos)];
     }
 
     int TreeNode::getChildLeafs()
