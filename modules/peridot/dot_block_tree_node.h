@@ -48,6 +48,8 @@ namespace Peridot
 
         NodeState m_state;
 
+        void printDebugLine(const char* context, const Vector3i& blockPos);
+
     public:
 
         TreeNode();
